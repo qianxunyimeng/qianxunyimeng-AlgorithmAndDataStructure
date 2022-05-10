@@ -14,6 +14,7 @@ public class ArrayGenerator {
         return arr;
     }
 
+
     /**
      * @description: 生成一个长度为n的随机数组，每个数字范围是 [0,bound)
      * @author: shiqingliang
