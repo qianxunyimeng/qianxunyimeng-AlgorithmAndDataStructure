@@ -1,5 +1,6 @@
 package com.qianxun.utils;
 
+import com.qianxun.插入排序法.InsertionSort;
 import com.qianxun.选择排序法.SelectionSort;
 
 /**
@@ -36,6 +37,10 @@ public class SortingHelper {
         long startTime = System.nanoTime();
         if("SelectionSort".equals(sortName)){
             SelectionSort.sort(arr);
+        }else if("InsertionSort".equals(sortName)){
+            InsertionSort.sort(arr);
+        }else if("InsertionSort2".equals(sortName)){
+            InsertionSort.sort2(arr);
         }
         long endTime = System.nanoTime();
         double time = (endTime - startTime) / 1000000.0;
