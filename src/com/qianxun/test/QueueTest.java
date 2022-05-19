@@ -43,5 +43,6 @@ public class QueueTest {
         }
         queue.dequeue();
         System.out.println(queue);
+        System.out.println();
     }
 }
