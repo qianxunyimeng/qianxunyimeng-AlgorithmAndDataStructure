@@ -1,5 +1,6 @@
 package com.qianxun.utils;
 
+import com.qianxun.归并排序法.MergeSort;
 import com.qianxun.插入排序法.InsertionSort;
 import com.qianxun.选择排序法.SelectionSort;
 
@@ -41,6 +42,8 @@ public class SortingHelper {
             InsertionSort.sort(arr);
         }else if("InsertionSort2".equals(sortName)){
             InsertionSort.sort2(arr);
+        } else if("MergeSort".equals(sortName)){
+            MergeSort.sort(arr);
         }
         long endTime = System.nanoTime();
         double time = (endTime - startTime) / 1000000.0;
