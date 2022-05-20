@@ -3,6 +3,8 @@ package com.qianxun.test;
 import com.qianxun.utils.ArrayGenerator;
 import com.qianxun.utils.SortingHelper;
 
+import java.util.Arrays;
+
 /**
  * @Description: TODO
  * @Author: shiqingliang
@@ -11,13 +13,19 @@ import com.qianxun.utils.SortingHelper;
  */
 public class MergeSortTest {
     public static void main(String[] args) {
-        int n = 100000;
+        int[] dataSize = {10000, 100000,1000000,10000000};
+        for(int n: dataSize){
+            Integer[] arr = ArrayGenerator.generateRandomArray(n, n);
+            Integer[] arr2 = Arrays.copyOf(arr, arr.length);
+            Integer[] arr3 = Arrays.copyOf(arr, arr.length);
+            Integer[] arr4 = Arrays.copyOf(arr, arr.length);
 
-        Integer[] arr = ArrayGenerator.generateRandomArray(n, n);
-
-        SortingHelper.sortTest("MergeSort", arr);
-//        for (int i = 0; i < arr.length; i++) {
-//            System.out.println(arr[i]);
-//        }
+            //SortingHelper.sortTest("SelectionSort", arr);
+            //SortingHelper.sortTest("InsertionSort", arr2);
+            SortingHelper.sortTest("MergeSort", arr3);
+            SortingHelper.sortTest("MergeSort2", arr2);
+            SortingHelper.sortTest("MergeSort3", arr4);
+            System.out.println("====================");
+        }
     }
 }

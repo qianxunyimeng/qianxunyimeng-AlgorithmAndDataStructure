@@ -1,5 +1,7 @@
 package com.qianxun.归并排序法;
 
+import com.qianxun.插入排序法.InsertionSort;
+
 import java.util.Arrays;
 
 /**
@@ -30,7 +32,34 @@ public class MergeSort<E> {
         int midIndex = startIndex + (endIndex - startIndex) / 2;
         sort(arr, startIndex, midIndex);
         sort(arr, midIndex + 1, endIndex);
-        merge(arr, startIndex, midIndex, endIndex);
+
+        //当左边当有序序列当最后一个元素比右边有序序列当第一个元素大当时候才需要将两个有序序列重新合并成一个有序序列。这一步判断是非常重要当性能优化
+        if(arr[midIndex].compareTo(arr[midIndex+1]) > 0){
+            merge(arr, startIndex, midIndex, endIndex);
+        }
+    }
+
+
+    public static <E extends Comparable<E>> void sort2(E[] arr){
+
+        sort2(arr, 0, arr.length - 1);
+    }
+
+    // sort2 当数据2⃣量少时，使用插入排序，提升一点性能
+    private static <E extends Comparable<E>> void sort2(E[] arr, int startIndex, int endIndex){
+        if(endIndex - startIndex <= 15){//优化1
+            InsertionSort.sort(arr,startIndex,endIndex);
+            return;
+        }
+
+        int midIndex = startIndex + (endIndex - startIndex) / 2;
+        sort(arr, startIndex, midIndex);
+        sort(arr, midIndex + 1, endIndex);
+
+        //当左边当有序序列当最后一个元素比右边有序序列当第一个元素大当时候才需要将两个有序序列重新合并成一个有序序列。这一步判断是非常重要当性能优化
+        if(arr[midIndex].compareTo(arr[midIndex+1]) > 0){//优化2
+            merge(arr, startIndex, midIndex, endIndex);
+        }
     }
     // 合并两个有序的区间 arr[startIndex, midIndex] 和 arr[midIndex + 1, endIndex]
     private static <E extends Comparable<E>> void merge(E[] arr, int startIndex, int midIndex, int endIndex){
@@ -63,5 +92,86 @@ public class MergeSort<E> {
             }
         }
     }
+
+    // merge2方法比merge更容易理解
+    private static <E extends Comparable<E>> void merge2(E[] arr, int startIndex, int midIndex, int endIndex){
+        E[] temp = Arrays.copyOfRange(arr,startIndex,endIndex+1);
+        int p1 = startIndex;
+        int p2 = midIndex + 1;
+        int p = 0;
+
+        while(p1 <= midIndex && p2 <= endIndex){
+            if(arr[p1].compareTo(arr[p2]) <= 0){
+                temp[p] = arr[p1];
+                p++;
+                p1++;
+            }else{
+                temp[p] = arr[p2];
+                p++;
+                p2++;
+            }
+        }
+
+        // 右侧小数组已排序完毕，左侧小数组还有剩余，将左侧小数组元素依次放入大数组尾部
+        while (p1 <= midIndex) {
+            temp[p++] = arr[p1++];
+        }
+        // 左侧小数组已排序完毕，右侧小数组还有剩余，将右侧小数组元素依次放入大数组尾部
+        while (p2 <= endIndex) {
+            temp[p++] = arr[p2++];
+        }
+
+        //此时temp数组为有序的数组，将temp再更新到原arr数组中
+        for (int i = 0; i < temp.length; i++) {
+            arr[i + startIndex] = temp[i];
+        }
+
+    }
+
+
+    public static <E extends Comparable> void sort3(E[] arr){
+
+        E[] temp = Arrays.copyOf(arr, arr.length);
+        sort3(arr, 0, arr.length - 1, temp);
+    }
+
+    private static <E extends Comparable> void sort3(E[] arr, int l, int r, E[] temp){
+
+        if (l >= r)
+            return;
+
+        int mid = l + (r - l) / 2;
+        sort3(arr, l, mid, temp);
+        sort3(arr, mid + 1, r, temp);
+
+        if(arr[mid].compareTo(arr[mid + 1]) > 0)
+            merge3(arr, l, mid, r, temp);
+    }
+
+    private static <E extends Comparable> void merge3(E[] arr, int l, int mid, int r, E[] temp){
+
+        System.arraycopy(arr, l, temp, l, r - l + 1);
+
+        int i = l, j = mid + 1;
+
+        // 每轮循环为 arr[k] 赋值
+        for(int k = l; k <= r; k ++){
+
+            if(i > mid){
+                arr[k] = temp[j]; j ++;
+            }
+            else if(j > r){
+                arr[k] = temp[i]; i ++;
+            }
+            else if(temp[i].compareTo(temp[j]) <= 0){
+                arr[k] = temp[i]; i ++;
+            }
+            else{
+                arr[k] = temp[j]; j ++;
+            }
+        }
+    }
+
+
 
 }
