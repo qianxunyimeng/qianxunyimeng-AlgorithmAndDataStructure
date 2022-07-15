@@ -1,6 +1,7 @@
 package com.qianxun.utils;
 
 import com.qianxun.归并排序法.MergeSort;
+import com.qianxun.快速排序.QuickSort;
 import com.qianxun.插入排序法.InsertionSort;
 import com.qianxun.选择排序法.SelectionSort;
 
@@ -48,6 +49,12 @@ public class SortingHelper {
             MergeSort.sort2(arr);
         }else if("MergeSort3".equals(sortName)){
             MergeSort.sort3(arr);
+        }else if(sortName.equals("QuickSort")){
+            QuickSort.sort(arr);
+        }else if(sortName.equals("QuickSort2Ways")){
+            QuickSort.sort2ways(arr);
+        }else if(sortName.equals("QuickSort3Ways")){
+            QuickSort.sort3ways(arr);
         }
         long endTime = System.nanoTime();
         double time = (endTime - startTime) / 1000000.0;
